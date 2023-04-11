@@ -1,0 +1,8 @@
+{
+  "defaultSchema": "dataform_incremental_models",
+  "assertionSchema": "dataform_incremental_models",
+  "warehouse": "bigquery",
+  "defaultDatabase": "whejna-caixa-dataops",
+  "defaultLocation": "europe-west4"
+}
+    
