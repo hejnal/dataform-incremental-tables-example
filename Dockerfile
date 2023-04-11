@@ -10,7 +10,6 @@ COPY .df-credentials.json $DATAFORM_DIR
 
 # Install the latest npm dependencies
 RUN npm install
-RUN dataform compile --timeout=10s
 
 # Run the application
-ENTRYPOINT ["dataform", "test"]
+ENTRYPOINT ["dataform"]
