@@ -1,0 +1,12 @@
+config {
+    type: "incremental",
+    uniqueKey: ["name"],
+    bigquery: {
+        partitionBy: "ingestion_date",
+        updatePartitionFilter:
+            "ingestion_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 120 DAY)"
+    }
+}
+
+SELECT CAST(ingestion_date AS DATE) AS ingestion_date, name, gender, number FROM ${ref("dataform_incremental_models", "landing_names")}
+${when(incremental(), `WHERE CAST(ingestion_date AS DATE) >= IFNULL((SELECT MAX(ingestion_date) FROM ${self()}), '1970-01-01')` )}

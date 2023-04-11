@@ -1,0 +1,7 @@
+{
+  "name": "incremental-tables-demo",
+  "dependencies": {
+    "@dataform/core": "2.0.1",
+    "dataform-scd": "https://github.com/dataform-co/dataform-scd/archive/0.3.tar.gz"
+  }
+}
