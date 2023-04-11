@@ -16,8 +16,8 @@ jobs:
         id: docker-build
         run: docker build . --file Dockerfile --tag my-unit-test-image:latest
       - name: Dataform Compile
-        id: unit-test
+        id: dataform-compile
         run: docker run my-unit-test-image:latest compile --timeout=10s
       - name: Dataform Run Unit Tests
-        id: unit-test
+        id: dataform-unit-test
         run: docker run my-unit-test-image:latest test --timeout=10s
