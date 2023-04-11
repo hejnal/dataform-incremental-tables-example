@@ -1,0 +1,13 @@
+config {
+    type: "test",
+    dataset: "top_name"
+}
+
+input "staging" {
+    SELECT "Bob" AS name, 20 AS number UNION ALL
+    SELECT "Alice" AS name, 25 AS number UNION ALL
+    SELECT "John" AS name, 30 AS number UNION ALL
+    SELECT "Sarah" AS name, 100 AS number
+}
+
+SELECT "SARAH" AS name, 100 AS number

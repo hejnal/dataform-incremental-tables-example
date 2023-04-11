@@ -1,0 +1,17 @@
+name: Dataform CI/CD
+
+on: 
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  dataform_unit_test:
+    runs-on: ubuntu-latest
+    name: Basic CI/CD Pipeline
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run unit tests
+        id: unit-tests
+        run: docker build . --file Dockerfile --tag my-unit-test-image:$(date +%s)
