@@ -1,0 +1,31 @@
+name: Dataform CI/CD
+
+on: 
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  dataform_unit_test:
+    runs-on: ubuntu-latest
+    name: Basic CI/CD Pipeline
+    steps:
+      - uses: actions/checkout@v2
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}'
+
+      - name: Build Dataform Docker Image
+        id: docker-build
+        run: docker build . --file Dockerfile --tag my-unit-test-image:latest
+
+      - name: Dataform Compile
+        id: dataform-compile
+        run: docker run --volume /home/runner/work/dataform-incremental-tables-example/dataform-incremental-tables-example/:/home/runner/work/dataform-incremental-tables-example/dataform-incremental-tables-example/ -e GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }} my-unit-test-image:latest compile --timeout=10s
+
+      - name: Dataform Run Unit Tests
+        id: dataform-unit-test
+        run: docker run --volume /home/runner/work/dataform-incremental-tables-example/dataform-incremental-tables-example/:/home/runner/work/dataform-incremental-tables-example/dataform-incremental-tables-example/ -e GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }} my-unit-test-image:latest test --timeout=10s
