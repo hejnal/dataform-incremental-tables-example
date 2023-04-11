@@ -12,6 +12,17 @@ jobs:
     name: Basic CI/CD Pipeline
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Setup GCloud Account
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          service_account_email: ${{ secrets.GOOGLE_CLOUD_SA_EMAIL }}
+          service_account_key: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
+      
+      - name: Login to GCP_CREDENTIALS
+        run: gcloud auth application-default login 
+
       - name: Build Dataform Docker Image
         id: docker-build
         run: docker build . --file Dockerfile --tag my-unit-test-image:latest
