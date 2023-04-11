@@ -12,6 +12,9 @@ jobs:
     name: Basic CI/CD Pipeline
     steps:
       - uses: actions/checkout@v2
-      - name: Run unit tests
-        id: unit-tests
+      - name: Build Dataform Docker Image
+        id: docker-build
         run: docker build . --file Dockerfile --tag my-unit-test-image:$(date +%s)
+      - name: Run Unit Tests
+        id: unit-test
+        run: docker run my-unit-test-image:$(date +%s)
